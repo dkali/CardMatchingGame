@@ -1,9 +1,46 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Lobby</PageTitle>
+<div class="center-panel">
+    <div class="panel-element">Hello, player!</div>
+    <div class="panel-element">
+        please select the board size
+    </div>
+    <div class="panel-element">
+        <RadzenNumeric
+            Min="1" Max="10"
+            @bind-Value=@rowSize
+            Placeholder="Enter or row size"
+            ShowUpDown="false"
+            TValue="int?"
+            Change=@(args => OnSettingsChange())
+        />
+        <RadzenNumeric 
+            Min="1" Max="10"
+            @bind-Value=@colSize
+            Placeholder="Enter or column size"
+            ShowUpDown="false"
+            TValue="int?"
+            Change=@(args => OnSettingsChange())
+        />
+    </div>
+    <RadzenButton Disabled=@disabledButton Text="@text" Click=@(args => OnClick())>Start Game</RadzenButton>
+</div>
 
-<h1>Hello, world!</h1>
+@code {
+    string text = "Hi";
+    int? rowSize;
+    int? colSize;
+    bool disabledButton = true;
 
-Welcome to your new app.
+    private void OnClick()
+    {
+        NavManager.NavigateTo("/game");
+    }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    private void OnSettingsChange()
+    {
+        disabledButton = (rowSize == null || colSize == null);
+    }
+}
