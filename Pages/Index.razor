@@ -1,5 +1,7 @@
 ﻿@page "/"
+@using CardMatchingGame.Data;
 @inject NavigationManager NavManager
+@inject GameStateService GameState
 
 <PageTitle>Lobby</PageTitle>
 <div class="vertical-center">
@@ -37,6 +39,7 @@
 
     private void OnClick()
     {
+        GameState.InitGame((int)rowSize, (int)colSize);
         NavManager.NavigateTo("/game");
     }
 
