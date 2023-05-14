@@ -11,7 +11,7 @@
         </div>
         <div>
             <RadzenNumeric
-                Min="1" Max="10"
+                Min="1" Max="7"
                 @bind-Value=@rowSize
                 Placeholder="Enter or row size"
                 ShowUpDown="false"
@@ -19,7 +19,7 @@
                 Change=@(args => OnSettingsChange())
             />
             <RadzenNumeric 
-                Min="1" Max="10"
+                Min="1" Max="7"
                 @bind-Value=@colSize
                 Placeholder="Enter or column size"
                 ShowUpDown="false"
@@ -45,6 +45,19 @@
 
     private void OnSettingsChange()
     {
-        disabledButton = (rowSize == null || colSize == null);
+        if (rowSize == null || colSize == null)
+        {
+            disabledButton = true;
+            return;
+        }
+
+        if ((rowSize * colSize) % 2 != 0)
+        {
+            // only even number of cards allowed
+            disabledButton = true;
+            return;
+        }
+
+        disabledButton = false;
     }
 }

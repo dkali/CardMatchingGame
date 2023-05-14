@@ -2,33 +2,33 @@ namespace CardMatchingGame.Data;
 
 public class GameStateService
 {
-    private int _rows;
-    private int _columns;
-    private List<int> _imageIds = new List<int>();
+    public int Rows { get; set; }
+    public int Columns { get; set; }
+    public List<int> ImageIds = new List<int>();
 
-    public void InitGame(int rows, int columns)
+    public void InitGame(int rowSize, int columnsSize)
     {
-        _rows = rows;
-        _columns = columns;
+        Rows = rowSize;
+        Columns = columnsSize;
 
         //generate unique image IDs
-        int imageNum = (_rows * _columns) / 2;
+        int imageNum = (Rows * Columns) / 2;
         Random rand = new Random();
         for (int i = 0; i < imageNum; i++)
         {
-            _imageIds.Add(rand.Next(1001));
+            ImageIds.Add(rand.Next(1001));
         }
         // duplicate IDs
-        _imageIds.AddRange(_imageIds);
+        ImageIds.AddRange(ImageIds);
 
         // shuffle elements
-        for (int i = _imageIds.Count - 1; i >= 1; i--)
+        for (int i = ImageIds.Count - 1; i >= 1; i--)
         {
             int j = rand.Next(i + 1);
             // swap _imageIds[j] and _imageIds[i]
-            var temp = _imageIds[j];
-            _imageIds[j] = _imageIds[i];
-            _imageIds[i] = temp;
+            var temp = ImageIds[j];
+            ImageIds[j] = ImageIds[i];
+            ImageIds[i] = temp;
         }
     }
 }
