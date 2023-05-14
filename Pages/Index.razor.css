@@ -1,7 +1,6 @@
-.center-panel {
-    justify-content: center;
-    display: grid;
-}
 .panel-element {
-    padding: 10px;
+    margin-top: 10px;
+}
+.vertical-center {
+    padding: 15%;
 }
