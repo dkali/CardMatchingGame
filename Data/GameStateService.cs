@@ -5,6 +5,7 @@ public class GameStateService
     public int Rows { get; set; }
     public int Columns { get; set; }
     public List<int> ImageIds = new List<int>();
+    public int UniqueImageNum;
 
     public void InitGame(int rowSize, int columnsSize)
     {
@@ -14,6 +15,7 @@ public class GameStateService
 
         //generate unique image IDs
         int imageNum = (Rows * Columns) / 2;
+        UniqueImageNum = imageNum;
         Random rand = new Random();
         while (imageNum > 0)
         {
