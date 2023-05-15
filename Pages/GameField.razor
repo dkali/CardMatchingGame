@@ -8,7 +8,7 @@
         <RadzenRow JustifyContent=@JustifyContent.Center AlignItems=@AlignItems.Center Gap="1rem">
             @for (int colInd = 0; colInd < GameState.Columns; colInd++)
             {
-                <ImageCard ImageIndex=@(_imageIndex++)/>
+                <ImageCard ImageId=@(GameState.ImageIds[_imageIndex++]) GameStateChanged="@GameStateChanged" CardOpen=@_openCards.Contains(GameState.ImageIds[_imageIndex-1]) />
             }
         </RadzenRow>
     }
@@ -16,9 +16,32 @@
 
 @code {
     private int _imageIndex = 0;
+    private int _lastClickedId = 0;
+    private List<int> _openCards = new List<int>();
 
     protected override void OnAfterRender(bool firstRender)
     {
         _imageIndex = 0;
+    }
+
+    private void GameStateChanged(int clickedImageId)
+    {
+        if (_lastClickedId == 0)
+        {
+            _lastClickedId = clickedImageId;
+        }
+        else
+        {
+            if (_lastClickedId == clickedImageId)
+            {
+                _lastClickedId = 0;
+                _openCards.Add(clickedImageId);
+            }
+            else
+            {
+                // flip cards back
+                StateHasChanged();
+            }
+        }
     }
 }

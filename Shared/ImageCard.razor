@@ -2,10 +2,10 @@
 @inject GameStateService GameState
 
 <Animation Effect="@Effect.FlipInX" Speed="@Speed.Faster" Delay="@Delay.None" IterationCount="1" Enabled=@_animationFlipEnabled>
-@if (_cardOpen)
+@if (CardOpen)
 {
     <RadzenImage
-        Path=@($"https://picsum.photos/id/{GameState.ImageIds[ImageIndex]}/200/300")
+        Path=@($"https://picsum.photos/id/{ImageId}/200/300")
         Style="width: 10rem;"
         class="rz-shadow-4"/>
 }
@@ -23,18 +23,22 @@ else
 
 @code {
     [Parameter]
-    public int ImageIndex { get; set; }
+    public int ImageId { get; set; }
+    [Parameter]
+    public Action<int> GameStateChanged { get; set; }
+    [Parameter]
+    public bool CardOpen {get; set; } = false;
     private bool _animationFlipEnabled = true;
     private bool _animationFlipOutXEnabled = false;
-    private bool _cardOpen = false;
     private void OnClick()
     {
         _animationFlipOutXEnabled = true;
     }
     private void FlipOutXAnimationEnd()
     {
-       _cardOpen = true;
+       CardOpen = true;
        _animationFlipEnabled = true;
+       GameStateChanged(ImageId);
     }
 
     protected override void OnAfterRender(bool firstRender)
