@@ -10,8 +10,8 @@
         <RadzenRow JustifyContent=@JustifyContent.Center AlignItems=@AlignItems.Center Gap="1rem">
             @for (int colInd = 0; colInd < GameState.Columns; colInd++)
             {
-                @GameState.ImageIds[_imageIndex++]
-                <ImageCard ImageId=@(GameState.ImageIds[_imageIndex-1]) GameStateChanged="@GameStateChanged" CardOpen=@_openCards.Contains(GameState.ImageIds[_imageIndex-1]) />
+                @* @GameState.ImageIds[_imageIndex++] *@
+                <ImageCard ImageId=@(GameState.ImageIds[_imageIndex++]) GameStateChanged="@GameStateChanged" CardOpen=@_openCards.Contains(GameState.ImageIds[_imageIndex-1]) />
             }
         </RadzenRow>
     }
