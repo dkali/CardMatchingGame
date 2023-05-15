@@ -1,0 +1,45 @@
+@using CardMatchingGame.Data;
+@inject GameStateService GameState
+
+<Animation Effect="@Effect.FlipInX" Speed="@Speed.Faster" Delay="@Delay.None" IterationCount="1" Enabled=@_animationFlipEnabled>
+@if (_cardOpen)
+{
+    <RadzenImage
+        Path=@($"https://picsum.photos/id/{GameState.ImageIds[ImageIndex]}/200/300")
+        Style="width: 10rem;"
+        class="rz-shadow-4"/>
+}
+else
+{
+    <Animation Effect="@Effect.FlipOutX" Speed="@Speed.Faster" Delay="@Delay.None" IterationCount="1" Enabled=@_animationFlipOutXEnabled OnAnimationEnd="FlipOutXAnimationEnd">
+        <RadzenImage
+            Path="tile.png"
+            Style="width: 10rem;"
+            Click=@(args => OnClick())
+            class="rz-shadow-4"/>
+    </Animation>
+}
+</Animation>
+
+@code {
+    [Parameter]
+    public int ImageIndex { get; set; }
+    private bool _animationFlipEnabled = true;
+    private bool _animationFlipOutXEnabled = false;
+    private bool _cardOpen = false;
+    private void OnClick()
+    {
+        _animationFlipOutXEnabled = true;
+    }
+    private void FlipOutXAnimationEnd()
+    {
+       _cardOpen = true;
+       _animationFlipEnabled = true;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _animationFlipEnabled = false;
+        _animationFlipOutXEnabled = false;
+    }
+}

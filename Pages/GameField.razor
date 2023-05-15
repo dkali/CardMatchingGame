@@ -8,29 +8,17 @@
         <RadzenRow JustifyContent=@JustifyContent.Center AlignItems=@AlignItems.Center Gap="1rem">
             @for (int colInd = 0; colInd < GameState.Columns; colInd++)
             {
-                <Animation Effect="@Effect.FlipInX" Speed="@Speed.Fast" Delay="@Delay.None" IterationCount="1" Enabled=@_animationEnafled>
-                    <RadzenImage
-                        Path=@($"https://picsum.photos/id/{GameState.ImageIds[_imageIndex++]}/200/300")
-                        Style="width: 10rem;"
-                        Click=@(args => OnClick())
-                        class="rz-shadow-4"/>
-                </Animation>
+                <ImageCard ImageIndex=@(_imageIndex++)/>
             }
         </RadzenRow>
     }
 </RadzenStack>
 
 @code {
-    private bool _animationEnafled = true;
     private int _imageIndex = 0;
 
     protected override void OnAfterRender(bool firstRender)
     {
         _imageIndex = 0;
-    }
-
-    private void OnClick()
-    {
-        Console.WriteLine("23232");
     }
 }

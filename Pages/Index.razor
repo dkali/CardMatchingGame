@@ -13,7 +13,7 @@
             <RadzenNumeric
                 Min="1" Max="7"
                 @bind-Value=@rowSize
-                Placeholder="Enter or row size"
+                Placeholder="number of rows"
                 ShowUpDown="false"
                 TValue="int?"
                 Change=@(args => OnSettingsChange())
@@ -21,7 +21,7 @@
             <RadzenNumeric 
                 Min="1" Max="7"
                 @bind-Value=@colSize
-                Placeholder="Enter or column size"
+                Placeholder="number of columns"
                 ShowUpDown="false"
                 TValue="int?"
                 Change=@(args => OnSettingsChange())

@@ -10,13 +10,19 @@ public class GameStateService
     {
         Rows = rowSize;
         Columns = columnsSize;
+        ImageIds.Clear();
 
         //generate unique image IDs
         int imageNum = (Rows * Columns) / 2;
         Random rand = new Random();
-        for (int i = 0; i < imageNum; i++)
+        while (imageNum > 0)
         {
-            ImageIds.Add(rand.Next(1001));
+            int id = rand.Next(1001);
+            if (!ImageIds.Contains(id))
+            {
+                ImageIds.Add(rand.Next(1001));
+                imageNum--;
+            }
         }
         // duplicate IDs
         ImageIds.AddRange(ImageIds);
