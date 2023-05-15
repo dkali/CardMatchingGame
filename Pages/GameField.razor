@@ -1,6 +1,8 @@
 @page "/game"
 @using CardMatchingGame.Data;
 @inject GameStateService GameState
+@inject DialogService DialogService
+@inject NavigationManager NavManager
 
 <RadzenStack Orientation=@Orientation.Vertical Gap="10px" JustifyContent=@JustifyContent.Center AlignItems=@AlignItems.Center>
     @for (int rowInd = 0; rowInd < GameState.Rows; rowInd++)
@@ -36,6 +38,17 @@
             if (_lastClickedId == clickedImageId)
             {
                 _openCards.Add(clickedImageId);
+                if (GameState.UniqueImageNum == _openCards.Count())
+                {
+                    // game ended;
+                    var result = DialogService.OpenAsync(":)", ds =>
+                        @<RadzenStack Gap="1.5rem">
+                            <p>Congratulations, you won!</p>
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenButton Text="Play Again" Click="(() => { StartAgain(); })" ButtonStyle="ButtonStyle.Primary" />
+                            </RadzenStack>
+                        </RadzenStack>);
+                }
             }
             else
             {
@@ -50,5 +63,10 @@
     {
         Thread.Sleep(1 * 1000);
         StateHasChanged();
+    }
+
+    private void StartAgain()
+    {
+        NavManager.NavigateTo("/");
     }
 }
